@@ -1,12 +1,11 @@
 {
-    "name": "bluepayment-plugin/bm-sdk",
+    "name": "bluemedia/php-sdk",
     "description": "Blue Media PHP SDK",
     "license": "LGPL-3.0-only",
     "require": {
         "php": ">=7.2",
         "guzzlehttp/guzzle": "6.3.*|6.5.*",
-        "jms/serializer": "^1.14|^2.0|^3.0",
-        "monolog/monolog": "^1.25"
+        "jms/serializer": "^1.14|^2.0|^3.0"
     },
     "require-dev": {
         "phpunit/phpunit": "^8.5",

@@ -51,10 +51,10 @@ $client = new BlueMedia\Client(
 ## Transakcja poprzez przekierowanie na paywall
 Najprostszym typem wykonania transakcji jest przekierowanie do serwisu BlueMedia wraz z danymi o transakcji. Obsługa płatności leży wtedy w całości po stronie serwisu BlueMedia.
 
-Aby wykonać transakcję należy wywołać metodę `doTransactionStandard`, poprawne wykonanie metody zwróci formularz który wykona przekierowanie do serwisu BlueMedia:
+Aby wykonać transakcję należy wywołać metodę `getTransactionRedirect`, poprawne wykonanie metody zwróci formularz który wykona przekierowanie do serwisu BlueMedia:
 
 ```php
-$result = $client->doTransactionStandard([
+$result = $client->getTransactionRedirect([
    'gatewayUrl' => 'https://pay-accept.bm.pl', // Adres bramki BlueMedia
    'transaction' => [
        'orderID' => '123', // Id transakcji, wymagany

@@ -42,7 +42,7 @@ class ClientTest extends BaseTestCase
         );
     }
 
-    public function testDoTransactionStandardReturnsRedirectView(): void
+    public function testGetTransactionRedirectReturnsRedirectView(): void
     {
         $result = $this->client
             ->getTransactionRedirect(TransactionFixtures\TransactionInit::getTransactionInitContinue());
