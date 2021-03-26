@@ -1,5 +1,5 @@
 ## BlueMedia PHP SDK
-
+#testkom 
 Kod zawarty w tym repozytorium umożliwia wykonanie transakcji oraz innych usług oferowanych przez Blue Media S.A.
 
 Użycie SDK zalecane jest podczas implementacji własnych modułów płatności.
