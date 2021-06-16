@@ -33,6 +33,7 @@ use DateTime;
  *      "receiverAddress",
  *      "remoteID",
  *      "bankHref",
+ *      "returnURL",
  *      "authorizationCode",
  *      "screenType",
  *      "defaultRegulationAcceptanceState",
@@ -254,6 +255,14 @@ class Transaction extends AbstractValueObject implements SerializableInterface
     protected $bankHref;
 
     /**
+     * return address.
+     *
+     * @var string
+     * @Type("string")
+     */
+    protected $returnURL;
+
+    /**
      * @param string $serviceID
      * @return Transaction
      */
@@ -361,6 +370,13 @@ class Transaction extends AbstractValueObject implements SerializableInterface
         return $this->bankHref;
     }
 
+    /**
+     * @return string
+     */
+    public function getReturnURL(): string
+    {
+        return $this->returnURL;
+    }
     /**
      * @return string
      */

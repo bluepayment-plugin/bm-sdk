@@ -17,6 +17,7 @@ use JMS\Serializer\Annotation\AccessorOrder;
  *      "title",
  *      "remoteID",
  *      "bankHref",
+ *     "returnURL",
  *      "hash"
  * })
  */

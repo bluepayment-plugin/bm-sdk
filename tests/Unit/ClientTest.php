@@ -91,6 +91,8 @@ class ClientTest extends BaseTestCase
         $this->assertSame($transactionBackgroundFixture['title'], $transactionBackground->getTitle());
         $this->assertSame($transactionBackgroundFixture['remoteID'], $transactionBackground->getRemoteID());
         $this->assertSame($transactionBackgroundFixture['bankHref'], $transactionBackground->getBankHref());
+        $this->assertSame($transactionBackgroundFixture['returnURL'], $transactionBackground->getReturnURL());
+
     }
 
     public function testDoTransactionBackgroundReturnsPaywayForm(): void

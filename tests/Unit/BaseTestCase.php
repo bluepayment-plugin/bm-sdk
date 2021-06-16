@@ -43,6 +43,7 @@ abstract class BaseTestCase extends PhpUnitTestCase
         $transactionDto->method('getGatewayId')->willReturn(0);
         $transactionDto->method('getCurrency')->willReturn('PLN');
         $transactionDto->method('getCustomerEmail')->willReturn('test@test.test');
+        $transactionDto->method('getReturnURL')->willReturn('https://google.pl');
 
         return $transactionDto;
     }
