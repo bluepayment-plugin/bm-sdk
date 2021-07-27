@@ -2,7 +2,7 @@
 
 Kod zawarty w tym repozytorium umożliwia wykonanie transakcji oraz innych usług oferowanych przez Blue Media S.A.
 
-Użycie SDK zalecane jest podczas implementacji własnych modułów płatności. Pełną bibliotekę pobierzesz [tutaj](https://github.com/bluepayment-plugin/bm-sdk/archive/refs/heads/master.zip)
+Użycie SDK zalecane jest podczas implementacji własnych modułów płatności. Możesz je pobrać [tutaj](https://github.com/bluepayment-plugin/bm-sdk/archive/refs/heads/master.zip)
 
 **Uwaga:** w wersji 1.0.0 możliwe jest wykonanie płatności oraz ITN z ograniczonym zestawem parametrów.
 
@@ -86,7 +86,7 @@ Metoda `doTransactionInit` rozszerza standardowy model rozpoczęcia transakcji o
 Metoda przyjmuje parametry takie jak w przypadku transakcji z przekierowaniem na paywall, z tą różnicą że wysyłany jest inny nagłówek, dzięki czemu serwis BlueMedia obsługuje żądanie w inny sposób.
 W odpowiedzi otrzymywany jest link do kontynuacji transakcji lub odpowiedź informująca o braku kontynuacji oraz statusem płatności.
 
-#### Przedtransakcja, link do kontynuacji płatności
+### Przedtransakcja, link do kontynuacji płatności
 ```php
 $result = $client->doTransactionInit([
     'gatewayUrl' => 'https://pay-accept.bm.pl',
@@ -109,7 +109,7 @@ $transactionContinue->toArray(); // [...]
 // ...
 ```
 
-#### Przedtransakcja, brak kontynuacji
+### Przedtransakcja, brak kontynuacji
 ```php
 $result = $client->doTransactionInit([
     'gatewayUrl' => 'https://pay-accept.bm.pl',
@@ -214,7 +214,7 @@ $itnResponse = $client->doItnInResponse($itnIn, $transactionConfirmed);
 return new Response($itnResponse->getData()->toXml());
 ```
 
-#### Obsługa ITN, utworzenie obiektu komunikatu
+### Obsługa ITN, utworzenie obiektu komunikatu
 Podczas implementacji może okazać się że przed wykonaniem obsługi ITN zajdzie potrzeba np. konfiguracji klienta na podstawie danych dostępowych w oparciu o walutę.
 W takim modelu programista może wspomóc się metodą `getItnObject`.
 
