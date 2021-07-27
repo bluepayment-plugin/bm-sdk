@@ -2,22 +2,10 @@
 
 Kod zawarty w tym repozytorium umożliwia wykonanie transakcji oraz innych usług oferowanych przez Blue Media S.A.
 
-Użycie SDK zalecane jest podczas implementacji własnych modułów płatności.
+Użycie SDK zalecane jest podczas implementacji własnych modułów płatności. Pełną bibliotekę pobierzesz [tutaj](https://github.com/bluepayment-plugin/bm-sdk)
 
 **Uwaga:** w wersji 1.0.0 możliwe jest wykonanie płatności oraz ITN z ograniczonym zestawem parametrów.
-## Spis treści
-- [Wymagania](#wymagania)
-- [Instalacja](#instalacja)
-- [Konfiguracja klienta](#konfiguracja-klienta)
-- [Transakcja poprzez przekierowanie na paywall](#transakcja-poprzez-przekierowanie-na-paywall)
-- [Przedtransakcja](#przedtransakcja)
-    * [Przedtransakcja, link do kontynuacji płatności](#przedtransakcja-link-do-kontynuacji-płatności)
-    * [Przedtransakcja, brak kontynuacji](#przedtransakcja-brak-kontynuacji)
-- [Szybki przelew](#szybki-przelew)
-- [Obsługa ITN (Instant Transaction Notification)](#obsługa-itn-(instant-transaction-notification))
-    * [Obsługa ITN, utworzenie obiektu komunikatu](#obsługa-itn-utworzenie-obiektu-komunikatu)
-- [Pobieranie listy aktualnie dostępnych regulaminów](#pobieranie-listy-aktualnie-dostępnych-regulaminów)
-- [Pobieranie listy kanałów płatności](#pobieranie-listy-kanałów-płatności)
+
 ## Wymagania
 - PHP w wersji 7.2 lub nowszej.
 - Rozszerzenia PHP:
