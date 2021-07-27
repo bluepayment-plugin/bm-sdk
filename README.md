@@ -2,7 +2,7 @@
 
 Kod zawarty w tym repozytorium umożliwia wykonanie transakcji oraz innych usług oferowanych przez Blue Media S.A.
 
-Użycie SDK zalecane jest podczas implementacji własnych modułów płatności. Pełną bibliotekę pobierzesz [tutaj](https://github.com/bluepayment-plugin/bm-sdk)
+Użycie SDK zalecane jest podczas implementacji własnych modułów płatności. Pełną bibliotekę pobierzesz [tutaj](https://github.com/bluepayment-plugin/bm-sdk/archive/refs/heads/master.zip)
 
 **Uwaga:** w wersji 1.0.0 możliwe jest wykonanie płatności oraz ITN z ograniczonym zestawem parametrów.
 
