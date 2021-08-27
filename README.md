@@ -86,7 +86,7 @@ Metoda `doTransactionInit` rozszerza standardowy model rozpoczęcia transakcji o
 Metoda przyjmuje parametry takie jak w przypadku transakcji z przekierowaniem na paywall, z tą różnicą że wysyłany jest inny nagłówek, dzięki czemu serwis BlueMedia obsługuje żądanie w inny sposób.
 W odpowiedzi otrzymywany jest link do kontynuacji transakcji lub odpowiedź informująca o braku kontynuacji oraz statusem płatności.
 
-### Przedtransakcja, link do kontynuacji płatności
+### Przedtransakcja, udany start, link do kontynuacji płatności
 ```php
 $result = $client->doTransactionInit([
     'gatewayUrl' => 'https://pay-accept.bm.pl',
@@ -101,7 +101,7 @@ $result = $client->doTransactionInit([
 ]);
 
 $transactionContinue = $result->getData();
-
+// dostępne tylko jeżeli getConfirmation() / getReason() nie zawierają informacji o błedzie
 $transactionContinue->getRedirectUrl(); // https://pay-accept.bm.pl/payment/continue/9IA2UISN/718GTV5E
 $transactionContinue->getStatus(); // PENDING
 $transactionContinue->getOrderId(); // 123
@@ -109,7 +109,7 @@ $transactionContinue->toArray(); // [...]
 // ...
 ```
 
-### Przedtransakcja, brak kontynuacji
+### Przedtransakcja, błąd startu, brak kontynuacji
 ```php
 $result = $client->doTransactionInit([
     'gatewayUrl' => 'https://pay-accept.bm.pl',
