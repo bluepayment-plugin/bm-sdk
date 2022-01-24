@@ -17,6 +17,5 @@ final class HashChecker
         );
 
         return $dataHash === $data->getHash();
-
     }
 }
