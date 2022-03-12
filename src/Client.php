@@ -160,7 +160,7 @@ final class Client
                 'gatewayUrl' => $gatewayUrl,
                 'paywayList' => [
                     'serviceID' => $this->configuration->getServiceId(),
-                    'messageID' => bin2hex(random_bytes(ClientEnum::MESSAGE_ID_LENGTH))
+                    'messageID' => bin2hex(random_bytes(ClientEnum::MESSAGE_ID_LENGTH / 2))
                 ]
             ],
             PaywayListDto::class,
