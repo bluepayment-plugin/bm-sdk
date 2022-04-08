@@ -23,22 +23,25 @@ use DateTime;
  *      "taxCountry",
  *      "customerIP",
  *      "title",
+ *      "receiverName",
+ *      "customerPhone",
+ *      "validityTime",
+ *      "linkValidityTime",
+ *      "recurringAction",
+ *      "clientHash",
+ *      "authorizationCode",
+ *      "screenType",
  *      "blikUIDKey",
  *      "blikUIDLabel",
  *      "blikAMKey",
- *      "validityTime",
- *      "linkValidityTime",
- *      "receiverNRB",
- *      "receiverName",
- *      "receiverAddress",
- *      "remoteID",
- *      "bankHref",
  *      "returnURL",
- *      "authorizationCode",
- *      "screenType",
  *      "defaultRegulationAcceptanceState",
  *      "defaultRegulationAcceptanceID",
  *      "defaultRegulationAcceptanceTime",
+ *      "receiverNRB",
+ *      "receiverAddress",
+ *      "remoteID",
+ *      "bankHref",
  *      "hash"
  * })
  */
@@ -263,6 +266,30 @@ class Transaction extends AbstractValueObject implements SerializableInterface
     protected $returnURL;
 
     /**
+     * recurring Action
+     *
+     * @var string
+     * @Type("string")
+     */
+    protected $recurringAction;
+
+    /**
+     * Customer Phone.
+     *
+     * @var string
+     * @Type("string")
+     */
+    protected $customerPhone;
+
+    /**
+     * Client Hash.
+     *
+     * @var string
+     * @Type("string")
+     */
+    protected $clientHash;
+
+    /**
      * @param string $serviceID
      * @return Transaction
      */
@@ -384,4 +411,22 @@ class Transaction extends AbstractValueObject implements SerializableInterface
     {
         return $this->blikAMKey;
     }
+
+    /**
+     * @return string
+     */
+    public function getCustomerPhone(): string
+    {
+        return $this->customerPhone;
+    }
+
+    /**
+     * @return string
+     */
+    public function getClientHash(): string
+    {
+        return $this->clientHash;
+    }
+
+
 }
