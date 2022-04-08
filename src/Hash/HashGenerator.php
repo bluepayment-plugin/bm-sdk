@@ -26,15 +26,29 @@ final class HashGenerator
             }
 
             if (is_array($value)) {
+                $value = self::arrayValuesRecursive($value);
                 $value = array_filter($value, 'mb_strlen');
                 $value = implode($configuration->getHashSeparator(), $value);
             }
 
-            $result .= $value.$configuration->getHashSeparator();
+            $result .= $value . $configuration->getHashSeparator();
         }
 
         $result .= $configuration->getSharedKey();
 
         return hash($configuration->getHashAlgo(), $result);
+    }
+
+    private static function arrayValuesRecursive($value)
+    {
+        $flat = [];
+        foreach ($value as $item) {
+            if (is_array($item)) {
+                $flat = array_merge($flat, self::arrayValuesRecursive($item));
+            } else {
+                $flat[] = $item;
+            }
+        }
+        return $flat;
     }
 }

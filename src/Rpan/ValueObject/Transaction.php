@@ -1,9 +1,8 @@
 <?php
 declare(strict_types=1);
 
-namespace BlueMedia\Itn\ValueObject;
+namespace BlueMedia\Rpan\ValueObject;
 
-use BlueMedia\Common\ValueObject\AbstractValueObject;
 use BlueMedia\Serializer\SerializableInterface;
 use JMS\Serializer\Annotation\AccessorOrder;
 use JMS\Serializer\Annotation\Type;
@@ -11,7 +10,6 @@ use JMS\Serializer\Annotation\Type;
 /**
  * @AccessorOrder("custom",
  *     custom = {
- *      "serviceID",
  *      "orderID",
  *      "remoteID",
  *      "amount",
@@ -20,20 +18,15 @@ use JMS\Serializer\Annotation\Type;
  *      "paymentDate",
  *      "paymentStatus",
  *      "paymentStatusDetails",
- *      "customerData",
- *      "hash"
+ *      "startAmount",
+ *      "invoiceNumber",
+ *      "customerNumber",
+ *      "customerEmail",
+ *      "customerPhone"
  * })
  */
-final class Itn extends AbstractValueObject implements SerializableInterface
+final class Transaction implements SerializableInterface
 {
-    /**
-     * Transaction service id.
-     *
-     * @var string
-     * @Type("string")
-     */
-    protected $serviceID;
-
     /**
      * Transaction order id.
      *
@@ -99,48 +92,45 @@ final class Itn extends AbstractValueObject implements SerializableInterface
     protected $paymentStatusDetails;
 
     /**
-     * @var CustomerData
-     * @Type("BlueMedia\Itn\ValueObject\CustomerData")
-     */
-    protected $customerData;
-
-    /**
-     * Itn hash.
+     * Payment start amount.
      *
      * @var string
      * @Type("string")
      */
-    protected $hash;
+    protected $startAmount;
 
     /**
-     * @param string $serviceID
-     * @return Itn
+     * Payment invoice Number.
+     *
+     * @var string
+     * @Type("string")
      */
-    public function setServiceID(string $serviceID): Itn
-    {
-        $this->serviceID = $serviceID;
-
-        return $this;
-    }
+    protected $invoiceNumber;
 
     /**
-     * @param string $hash
-     * @return Itn
+     * Payment customer Number.
+     *
+     * @var string
+     * @Type("string")
      */
-    public function setHash(string $hash): Itn
-    {
-        $this->hash = $hash;
-
-        return $this;
-    }
+    protected $customerNumber;
 
     /**
-     * @return string
+     * Payment customer Email.
+     *
+     * @var string
+     * @Type("string")
      */
-    public function getHash(): string
-    {
-        return trim($this->hash);
-    }
+    protected $customerEmail;
+
+    /**
+     * Payment customer Phone
+     *
+     * @var string
+     * @Type("string")
+     */
+    protected $customerPhone;
+
 
     /**
      * @return string
@@ -199,10 +189,42 @@ final class Itn extends AbstractValueObject implements SerializableInterface
     }
 
     /**
-     * @return CustomerData
+     * @return string
      */
-    public function getCustomerData(): CustomerData
+    public function getStartAmount(): string
     {
-        return $this->customerData;
+        return $this->startAmount;
+    }
+
+    /**
+     * @return string
+     */
+    public function getInvoiceNumber(): string
+    {
+        return $this->invoiceNumber;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCustomerNumber(): string
+    {
+        return $this->customerNumber;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCustomerEmail(): string
+    {
+        return $this->customerEmail;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCustomerPhone(): string
+    {
+        return $this->customerPhone;
     }
 }

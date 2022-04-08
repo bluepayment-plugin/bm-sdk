@@ -8,6 +8,7 @@ abstract class ClientEnum
     public const PAYMENT_ROUTE = '/payment';
     public const PAYWAY_LIST_ROUTE = '/paywayList';
     public const GET_REGULATIONS_ROUTE = '/webapi/regulationsGet';
+    public const DEACTIVATE_RECURRING_ROUTE = '/deactivate_recurring';
 
     public const STATUS_CONFIRMED = 'CONFIRMED';
     public const STATUS_NOT_CONFIRMED = 'NOTCONFIRMED';
@@ -31,5 +32,6 @@ abstract class ClientEnum
     public const PATTERN_XML_ERROR = '@<error>(.*)</error>@Usi';
     public const PATTERN_GENERAL_ERROR = '/error(.*)/si';
 
-    public const MESSAGE_ID_LENGTH = 32;
+    // byte = 2 hex characters so 16 bytes = 32 char
+    public const MESSAGE_ID_LENGTH = 16;
 }
