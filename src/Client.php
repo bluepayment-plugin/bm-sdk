@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace BlueMedia;
 
 use BlueMedia\Confirmation\Builder\ConfirmationVOBuilder;
+use BlueMedia\Hash\HashableInterface;
 use BlueMedia\HttpClient\HttpClientInterface;
 use BlueMedia\Hash\HashChecker;
 use BlueMedia\Itn\Builder\ItnVOBuilder;
@@ -160,7 +161,7 @@ final class Client
                 'gatewayUrl' => $gatewayUrl,
                 'paywayList' => [
                     'serviceID' => $this->configuration->getServiceId(),
-                    'messageID' => bin2hex(random_bytes(ClientEnum::MESSAGE_ID_LENGTH))
+                    'messageID' => bin2hex(random_bytes(ClientEnum::MESSAGE_ID_LENGTH/2))
                 ]
             ],
             PaywayListDto::class,
@@ -190,7 +191,7 @@ final class Client
                 'gatewayUrl' => $gatewayUrl,
                 'regulationList' => [
                     'serviceID' => $this->configuration->getServiceId(),
-                    'messageID' => bin2hex(random_bytes(ClientEnum::MESSAGE_ID_LENGTH))
+                    'messageID' => bin2hex(random_bytes(ClientEnum::MESSAGE_ID_LENGTH/2))
                 ]
             ],
             RegulationListDto::class,
@@ -209,11 +210,11 @@ final class Client
     /**
      * Checks id hash is valid.
      *
-     * @param SerializableInterface $data
+     * @param HashableInterface $data
      * @return bool
      * @api
      */
-    public function checkHash(SerializableInterface $data): bool
+    public function checkHash(HashableInterface $data): bool
     {
         return HashChecker::checkHash($data, $this->configuration);
     }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace BlueMedia\Itn\ValueObject;
 
 use BlueMedia\Common\ValueObject\AbstractValueObject;
+use BlueMedia\Hash\HashableInterface;
 use JMS\Serializer\Annotation\Type;
 use JMS\Serializer\Annotation\AccessorOrder;
 use BlueMedia\Serializer\SerializableInterface;
@@ -23,7 +24,7 @@ use BlueMedia\Serializer\SerializableInterface;
  *      "hash"
  * })
  */
-final class Itn extends AbstractValueObject implements SerializableInterface
+final class Itn extends AbstractValueObject implements SerializableInterface, HashableInterface
 {
     /**
      * Transaction service id.
@@ -135,6 +136,11 @@ final class Itn extends AbstractValueObject implements SerializableInterface
         return trim($this->hash);
     }
 
+    public function isHashPresent(): bool
+    {
+        return $this->hash !== null;
+    }
+
     /**
      * @return string
      */
@@ -186,7 +192,7 @@ final class Itn extends AbstractValueObject implements SerializableInterface
     /**
      * @return string
      */
-    public function getPaymentStatusDetails(): string
+    public function getPaymentStatusDetails(): ?string
     {
         return $this->paymentStatusDetails;
     }

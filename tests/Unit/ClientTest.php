@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Tests\Unit;
 
 use BlueMedia\Common\Enum\ClientEnum;
+use BlueMedia\Common\Exception\HashNotReturnedFromServerException;
 use BlueMedia\HttpClient\HttpClient;
 use BlueMedia\Transaction\ValueObject\Transaction;
 use GuzzleHttp\Psr7\Response as GuzzleResponse;
@@ -205,10 +206,30 @@ class ClientTest extends BaseTestCase
 
         $transactionStub->method('toArray')->willReturn($transactionInitData);
         $transactionStub->method('getHash')->willReturn($hash);
+        $transactionStub->method('isHashPresent')->willReturn(true);
 
         $result = $this->client->checkHash($transactionStub);
 
         $this->assertSame($value, $result);
+    }
+
+    /**
+     * @dataProvider checkHashProvider
+     * @param string $hash
+     * @param bool $value
+     */
+    public function testCheckHashThrowsHashNotReturnedException(string $hash, bool $value): void
+    {
+        $transactionStub = $this->createStub(Transaction::class);
+        $transactionInitData = TransactionFixtures\TransactionInit::getTransactionInit();
+
+        $transactionStub->method('toArray')->willReturn($transactionInitData);
+        $transactionStub->method('getHash')->willReturn($hash);
+        $transactionStub->method('isHashPresent')->willReturn(false);
+
+        $this->expectException(HashNotReturnedFromServerException::class);
+
+        $this->client->checkHash($transactionStub);
     }
 
     public function testGetItnObject(): void
