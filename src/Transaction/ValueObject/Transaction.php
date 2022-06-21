@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace BlueMedia\Transaction\ValueObject;
 
+use BlueMedia\Hash\HashableInterface;
 use BlueMedia\Serializer\SerializableInterface;
 use BlueMedia\Common\ValueObject\AbstractValueObject;
 use JMS\Serializer\Annotation\Type;
@@ -42,7 +43,7 @@ use DateTime;
  *      "hash"
  * })
  */
-class Transaction extends AbstractValueObject implements SerializableInterface
+class Transaction extends AbstractValueObject implements SerializableInterface, HashableInterface
 {
     /**
      * Transaction service id.
@@ -296,6 +297,11 @@ class Transaction extends AbstractValueObject implements SerializableInterface
     public function getHash(): string
     {
         return trim($this->hash);
+    }
+
+    public function isHashPresent(): bool
+    {
+        return $this->hash !== null;
     }
 
     /**

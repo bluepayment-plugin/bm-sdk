@@ -3,14 +3,17 @@ declare(strict_types=1);
 
 namespace BlueMedia\Hash;
 
-use RuntimeException;
+use BlueMedia\Common\Exception\HashNotReturnedFromServerException;
 use BlueMedia\Configuration;
-use BlueMedia\Serializer\SerializableInterface;
 
 final class HashChecker
 {
-    public static function checkHash(SerializableInterface $data, Configuration $configuration): bool
+    public static function checkHash(HashableInterface $data, Configuration $configuration): bool
     {
+        if (!$data->isHashPresent()) {
+            throw HashNotReturnedFromServerException::noHash();
+        }
+
         $dataHash = HashGenerator::generateHash(
             $data->toArray(),
             $configuration

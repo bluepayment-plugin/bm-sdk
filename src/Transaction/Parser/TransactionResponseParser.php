@@ -42,6 +42,7 @@ final class TransactionResponseParser extends ResponseParser
 
     private function parseTransactionBackgroundResponse(): SerializableInterface
     {
+        /** @var TransactionBackground $transaction */
         $transaction = (new Serializer())->deserializeXml($this->response, TransactionBackground::class);
 
         if (HashChecker::checkHash($transaction, $this->configuration) === false) {
@@ -56,8 +57,10 @@ final class TransactionResponseParser extends ResponseParser
         $xmlTransaction = XMLParser::parse($this->response);
 
         if (isset($xmlTransaction->redirecturl)) {
+            /** @var TransactionContinue $transaction */
             $transaction = (new Serializer())->deserializeXml($this->response, TransactionContinue::class);
         } else {
+            /** @var TransactionInit $transaction */
             $transaction = (new Serializer())->deserializeXml($this->response, TransactionInit::class);
         }
 
