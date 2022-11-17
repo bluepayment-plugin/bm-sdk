@@ -5,9 +5,9 @@ namespace BlueMedia\Itn\ValueObject;
 
 use BlueMedia\Common\ValueObject\AbstractValueObject;
 use BlueMedia\Hash\HashableInterface;
-use JMS\Serializer\Annotation\Type;
-use JMS\Serializer\Annotation\AccessorOrder;
 use BlueMedia\Serializer\SerializableInterface;
+use JMS\Serializer\Annotation\AccessorOrder;
+use JMS\Serializer\Annotation\Type;
 
 /**
  * @AccessorOrder("custom",
@@ -21,6 +21,7 @@ use BlueMedia\Serializer\SerializableInterface;
  *      "paymentDate",
  *      "paymentStatus",
  *      "paymentStatusDetails",
+ *      "customerData",
  *      "hash"
  * })
  */
@@ -99,12 +100,25 @@ final class Itn extends AbstractValueObject implements SerializableInterface, Ha
     protected $paymentStatusDetails;
 
     /**
+     * Customer data.
+     *
+     * @var CustomerData
+     * @Type("BlueMedia\Itn\ValueObject\CustomerData")
+     */
+    protected $customerData;
+
+    /**
      * Itn hash.
      *
      * @var string
      * @Type("string")
      */
     protected $hash;
+
+    public function isHashPresent(): bool
+    {
+        return $this->hash !== null;
+    }
 
     /**
      * @param string $serviceID
@@ -126,19 +140,6 @@ final class Itn extends AbstractValueObject implements SerializableInterface, Ha
         $this->hash = $hash;
 
         return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getHash(): string
-    {
-        return trim($this->hash);
-    }
-
-    public function isHashPresent(): bool
-    {
-        return $this->hash !== null;
     }
 
     /**
@@ -195,5 +196,21 @@ final class Itn extends AbstractValueObject implements SerializableInterface, Ha
     public function getPaymentStatusDetails(): ?string
     {
         return $this->paymentStatusDetails;
+    }
+
+    /**
+     * @return CustomerData
+     */
+    public function getCustomerData(): ?CustomerData
+    {
+        return $this->customerData;
+    }
+
+    /**
+     * @return string
+     */
+    public function getHash(): string
+    {
+        return trim($this->hash);
     }
 }
