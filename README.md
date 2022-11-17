@@ -16,7 +16,7 @@ Użycie SDK zalecane jest podczas implementacji własnych modułów płatności.
     * [Przedtransakcja, link do kontynuacji płatności](#przedtransakcja-link-do-kontynuacji-płatności)
     * [Przedtransakcja, brak kontynuacji](#przedtransakcja-brak-kontynuacji)
 - [Szybki przelew](#szybki-przelew)
-- [Obsługa ITN (Instant Transaction Notification)](#obsługa-itn-(instant-transaction-notification))
+- [Obsługa ITN (Instant Transaction Notification)](#obsługa-itn-instant-transaction-notification)
     * [Obsługa ITN, utworzenie obiektu komunikatu](#obsługa-itn-utworzenie-obiektu-komunikatu)
 - [Pobieranie listy aktualnie dostępnych regulaminów](#pobieranie-listy-aktualnie-dostępnych-regulaminów)
 - [Pobieranie listy kanałów płatności](#pobieranie-listy-kanałów-płatności)
