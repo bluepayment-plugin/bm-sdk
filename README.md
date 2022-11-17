@@ -5,6 +5,7 @@ Kod zawarty w tym repozytorium umożliwia wykonanie transakcji oraz innych usłu
 Użycie SDK zalecane jest podczas implementacji własnych modułów płatności.
 
 **Uwaga:** w wersji 1.0.0 możliwe jest wykonanie płatności oraz ITN z ograniczonym zestawem parametrów.
+
 ## Spis treści
 - [Repozytorium](#repozytorium)
 - [Wymagania](#wymagania)
@@ -35,19 +36,22 @@ Użycie SDK zalecane jest podczas implementacji własnych modułów płatności.
   - mbstring,
   - hash
 
-
 ## Instalacja
+
 ``` bash
 $ composer require bluepayment-plugin/bm-sdk
 ```
+
 ## Konfiguracja klienta
 
 W celu utworzenia warstwy komunikacji należy utworzyć obiekt klasy `BlueMedia\Client` podając id serwisu oraz klucz współdzielony (przyznane przez BlueMedia).
+
 ```php
 $client = new BlueMedia\Client('ID SERWISU', 'KLUCZ WSPÓŁDZIELONY');
 ```
 
 Podczas tworzenia obiektu klienta, za argumentami danych serwisu można dodatkowo dodać użyty tryb szyfrowania oraz separator danych (w przypadku kiedy są nadane inne niż domyślne):
+
 ```php
 $client = new BlueMedia\Client(
     'ID SERWISU', 
@@ -56,6 +60,7 @@ $client = new BlueMedia\Client(
     '|' // separator danych, domyślnie |
 );
 ```
+
 ## Transakcja poprzez przekierowanie na paywall
 Najprostszym typem wykonania transakcji jest przekierowanie do serwisu BlueMedia wraz z danymi o transakcji. Obsługa płatności leży wtedy w całości po stronie serwisu BlueMedia.
 
@@ -76,6 +81,7 @@ $result = $client->getTransactionRedirect([
 
 echo $result->getData();
 ```
+
 Po wykonaniu płatności, serwis BlueMedia wykona przekierowanie na skonfigurowany wcześniej adres powrotu płatności. Przekierowanie następuje poprzez żądanie HTTPS (GET) z trzema parametrami:
 - ServiceID - Identyfikator serwisu
 - OrderID - Identyfikator transakcji
@@ -94,7 +100,6 @@ $result = $client->doConfirmationCheck($data); // true | false
 ```
 
 ## Przedtransakcja
-
 Metoda `doTransactionInit` rozszerza standardowy model rozpoczęcia transakcji o obsługę określonych potrzeb:
 - zamówienia linku do płatności na podstawie przesłanych parametrów
 - obciążenia Klienta (jeśli nie jest wymagana dodatkowa autoryzacja dokonana przez Klienta)
@@ -107,6 +112,7 @@ Metoda przyjmuje parametry takie jak w przypadku transakcji z przekierowaniem na
 W odpowiedzi otrzymywany jest link do kontynuacji transakcji lub odpowiedź informująca o braku kontynuacji oraz statusem płatności.
 
 #### Przedtransakcja, link do kontynuacji płatności
+
 ```php
 $result = $client->doTransactionInit([
     'gatewayUrl' => 'https://pay-accept.bm.pl',
@@ -130,6 +136,7 @@ $transactionContinue->toArray(); // [...]
 ```
 
 #### Przedtransakcja, brak kontynuacji
+
 ```php
 $result = $client->doTransactionInit([
     'gatewayUrl' => 'https://pay-accept.bm.pl',
@@ -153,12 +160,14 @@ $transactionInit->getOrderId(); // 123
 $transactionInit->toArray(); // [...]
 // ...
 ```
+
 ## Szybki przelew
 Szybki Przelew to forma płatności, która wymaga od Klienta samodzielnego przepisania danych do przelewu dostarczanych przez System. Dane do przelewu można pozyskać dzięki metodzie `doTransactionBackground`.
 
 W zależności od kanału płatności jaki zostanie wybrany w kontekście transakcji, metoda zwróci dane do przelewu lub gotowy formularz.
 
 Przykład wywołania (dane do transakcji):
+
 ```php
 $result = $client->doTransactionBackground([
     'gatewayUrl' => 'https://pay-accept.bm.pl',
@@ -186,6 +195,7 @@ $transactionBackground->toArray(); // [...]
 ```
 
 Przykład wywołania (formularz płatności):
+
 ```php
 $result = $client->doTransactionBackground([
     'gatewayUrl' => 'https://pay-accept.bm.pl',
@@ -207,6 +217,7 @@ $transactionBackground = $result->getData();
 
 echo $transactionBackground; // <form action="https://pg-accept.blue.pl/gateway/test/index.jsp" name="formGoPBL" method="POST"><input type="hidden" name="transaction" value="758519"> (...)
 ```
+
 ## Obsługa ITN (Instant Transaction Notification)
 Serwis BlueMedia po wykonaniu płatności wysyła na wcześniej skonfigurowany adres ITN komunikat o statusie płatności. Dane przesyłane są w formacie XML dodatkowo zakodowanym w base64.
 SDK oferuje metodę `doItnIn` która w wyniku przekazania danych z serwisu BlueMedia zwraca gotowy obiekt `BlueMedia\Itn\ValueObject\ItnIn` pozwalający na użycie akcesorów lub konwersję do tablicy.
@@ -244,6 +255,7 @@ $itn = Client::getItnObject($_POST['transactions']);
 $itn->getCurrency(); // PLN
 // ...
 ```
+
 ## Pobieranie listy aktualnie dostępnych regulaminów
 Metoda `getRegulationList` umożliwia odpytanie o aktualną listę regulaminów wraz linkami do wyświetlenia w serwisie oraz akceptacji przez klienta.
 
