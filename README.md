@@ -42,6 +42,18 @@ Użycie SDK zalecane jest podczas implementacji własnych modułów płatności.
 $ composer require bluepayment-plugin/bm-sdk
 ```
 
+*Jeżeli nie korzystasz z żadnego frameworka (np. Symfony) to jest bardzo prawdopodobne, że po instalacji będzie potrzebne ręczne załadowanie klas zgodnie z przykładem ze strony https://getcomposer.org/doc/01-basic-usage.md#autoloading*:
+
+```php
+require_once 'vendor/autoload.php';
+
+// ..
+
+$client = new BlueMedia\Client('ID SERWISU', 'KLUCZ WSPÓŁDZIELONY');
+```
+
+*Niezaładowanie klas w odpowiedni sposób zakóczy się błędem "Class not found".*
+
 ## Konfiguracja klienta
 
 W celu utworzenia warstwy komunikacji należy utworzyć obiekt klasy `BlueMedia\Client` podając id serwisu oraz klucz współdzielony (przyznane przez BlueMedia).
