@@ -3,12 +3,12 @@ declare(strict_types=1);
 
 namespace BlueMedia\Transaction\ValueObject;
 
+use BlueMedia\Common\ValueObject\AbstractValueObject;
 use BlueMedia\Hash\HashableInterface;
 use BlueMedia\Serializer\SerializableInterface;
-use BlueMedia\Common\ValueObject\AbstractValueObject;
-use JMS\Serializer\Annotation\Type;
-use JMS\Serializer\Annotation\AccessorOrder;
 use DateTime;
+use JMS\Serializer\Annotation\AccessorOrder;
+use JMS\Serializer\Annotation\Type;
 
 /**
  * @AccessorOrder("custom",
@@ -24,22 +24,24 @@ use DateTime;
  *      "taxCountry",
  *      "customerIP",
  *      "title",
+ *      "receiverName",
+ *      "validityTime",
+ *      "linkValidityTime",
+ *      "authorizationCode",
+ *      "screenType",
  *      "blikUIDKey",
  *      "blikUIDLabel",
  *      "blikAMKey",
- *      "validityTime",
- *      "linkValidityTime",
- *      "receiverNRB",
- *      "receiverName",
- *      "receiverAddress",
- *      "remoteID",
- *      "bankHref",
  *      "returnURL",
- *      "authorizationCode",
- *      "screenType",
  *      "defaultRegulationAcceptanceState",
  *      "defaultRegulationAcceptanceID",
  *      "defaultRegulationAcceptanceTime",
+ *
+ *      "receiverNRB",
+ *      "receiverAddress",
+ *      "remoteID",
+ *      "bankHref",
+ *
  *      "hash"
  * })
  */
@@ -86,24 +88,6 @@ class Transaction extends AbstractValueObject implements SerializableInterface, 
     protected $gatewayID;
 
     /**
-     * @var DateTime
-     * @Type("DateTime<'Y-m-d H:i:s'>")
-     */
-    protected $defaultRegulationAcceptanceTime;
-
-    /**
-     * @var string
-     * @Type("string")
-     */
-    protected $defaultRegulationAcceptanceState;
-
-    /**
-     * @var string
-     * @Type("string")
-     */
-    protected $defaultRegulationAcceptanceID;
-
-    /**
      * Transaction currency.
      *
      * @var string
@@ -120,6 +104,22 @@ class Transaction extends AbstractValueObject implements SerializableInterface, 
     protected $customerEmail;
 
     /**
+     * Transaction customer bank account number.
+     *
+     * @var string
+     * @Type("string")
+     */
+    protected $customerNRB;
+
+    /**
+     * Transaction tax country.
+     *
+     * @var string
+     * @Type("string")
+     */
+    protected $taxCountry;
+
+    /**
      * Customer IP address.
      *
      * @var string
@@ -134,6 +134,14 @@ class Transaction extends AbstractValueObject implements SerializableInterface, 
      * @Type("string")
      */
     protected $title;
+
+    /**
+     * Transaction receiver name.
+     *
+     * @var string
+     * @Type("string")
+     */
+    protected $receiverName;
 
     /**
      * Transaction validity time.
@@ -168,30 +176,6 @@ class Transaction extends AbstractValueObject implements SerializableInterface, 
     protected $screenType;
 
     /**
-     * Transaction customer bank account number.
-     *
-     * @var string
-     * @Type("string")
-     */
-    protected $customerNRB;
-
-    /**
-     * Transaction tax country.
-     *
-     * @var string
-     * @Type("string")
-     */
-    protected $taxCountry;
-
-    /**
-     * Transaction receiver name.
-     *
-     * @var string
-     * @Type("string")
-     */
-    protected $receiverName;
-
-    /**
      * BLIK Alias UID key.
      *
      * @var string
@@ -214,6 +198,32 @@ class Transaction extends AbstractValueObject implements SerializableInterface, 
      * @Type("string")
      */
     protected $blikAMKey;
+
+    /**
+     * return address.
+     *
+     * @var string
+     * @Type("string")
+     */
+    protected $returnURL;
+
+    /**
+     * @var string
+     * @Type("string")
+     */
+    protected $defaultRegulationAcceptanceState;
+
+    /**
+     * @var string
+     * @Type("string")
+     */
+    protected $defaultRegulationAcceptanceID;
+
+    /**
+     * @var DateTime
+     * @Type("DateTime<'Y-m-d H:i:s'>")
+     */
+    protected $defaultRegulationAcceptanceTime;
 
     /**
      * Receiver bank account number.
@@ -240,14 +250,6 @@ class Transaction extends AbstractValueObject implements SerializableInterface, 
     protected $remoteID;
 
     /**
-     * Transaction hash.
-     *
-     * @var string
-     * @Type("string")
-     */
-    protected $hash;
-
-    /**
      * Banks system URL.
      *
      * @var string
@@ -256,12 +258,17 @@ class Transaction extends AbstractValueObject implements SerializableInterface, 
     protected $bankHref;
 
     /**
-     * return address.
+     * Transaction hash.
      *
      * @var string
      * @Type("string")
      */
-    protected $returnURL;
+    protected $hash;
+
+    public function isHashPresent(): bool
+    {
+        return $this->hash !== null;
+    }
 
     /**
      * @param string $serviceID
@@ -271,14 +278,6 @@ class Transaction extends AbstractValueObject implements SerializableInterface, 
     {
         $this->serviceID = $serviceID;
         return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getServiceID(): string
-    {
-        return $this->serviceID;
     }
 
     /**
@@ -294,38 +293,9 @@ class Transaction extends AbstractValueObject implements SerializableInterface, 
     /**
      * @return string
      */
-    public function getHash(): string
+    public function getServiceID(): string
     {
-        return trim($this->hash);
-    }
-
-    public function isHashPresent(): bool
-    {
-        return $this->hash !== null;
-    }
-
-    /**
-     * @return string
-     */
-    public function getReceiverNRB(): string
-    {
-        return $this->receiverNRB;
-    }
-
-    /**
-     * @return string
-     */
-    public function getReceiverName(): string
-    {
-        return $this->receiverName;
-    }
-
-    /**
-     * @return string
-     */
-    public function getReceiverAddress(): string
-    {
-        return $this->receiverAddress;
+        return $this->serviceID;
     }
 
     /**
@@ -347,6 +317,22 @@ class Transaction extends AbstractValueObject implements SerializableInterface, 
     /**
      * @return string
      */
+    public function getDescription(): string
+    {
+        return $this->description;
+    }
+
+    /**
+     * @return int
+     */
+    public function getGatewayID(): int
+    {
+        return $this->gatewayID;
+    }
+
+    /**
+     * @return string
+     */
     public function getCurrency(): string
     {
         return $this->currency;
@@ -355,9 +341,153 @@ class Transaction extends AbstractValueObject implements SerializableInterface, 
     /**
      * @return string
      */
+    public function getCustomerEmail(): string
+    {
+        return $this->customerEmail;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCustomerNRB(): string
+    {
+        return $this->customerNRB;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTaxCountry(): string
+    {
+        return $this->taxCountry;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCustomerIP(): string
+    {
+        return $this->customerIP;
+    }
+
+    /**
+     * @return string
+     */
     public function getTitle(): string
     {
         return $this->title;
+    }
+
+    /**
+     * @return string
+     */
+    public function getReceiverName(): string
+    {
+        return $this->receiverName;
+    }
+
+    /**
+     * @return DateTime
+     */
+    public function getValidityTime(): DateTime
+    {
+        return $this->validityTime;
+    }
+
+    /**
+     * @return DateTime
+     */
+    public function getLinkValidityTime(): DateTime
+    {
+        return $this->linkValidityTime;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAuthorizationCode(): string
+    {
+        return $this->authorizationCode;
+    }
+
+    /**
+     * @return string
+     */
+    public function getScreenType(): string
+    {
+        return $this->screenType;
+    }
+
+    /**
+     * @return string
+     */
+    public function getBlikUIDKey(): string
+    {
+        return $this->blikUIDKey;
+    }
+
+    /**
+     * @return string
+     */
+    public function getBlikUIDLabel(): string
+    {
+        return $this->blikUIDLabel;
+    }
+
+    /**
+     * @return string
+     */
+    public function getBlikAMKey(): string
+    {
+        return $this->blikAMKey;
+    }
+
+    /**
+     * @return string
+     */
+    public function getReturnURL(): string
+    {
+        return $this->returnURL;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDefaultRegulationAcceptanceState(): string
+    {
+        return $this->defaultRegulationAcceptanceState;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDefaultRegulationAcceptanceID(): string
+    {
+        return $this->defaultRegulationAcceptanceID;
+    }
+
+    /**
+     * @return DateTime
+     */
+    public function getDefaultRegulationAcceptanceTime(): DateTime
+    {
+        return $this->defaultRegulationAcceptanceTime;
+    }
+
+    /**
+     * @return string
+     */
+    public function getReceiverNRB(): string
+    {
+        return $this->receiverNRB;
+    }
+
+    /**
+     * @return string
+     */
+    public function getReceiverAddress(): string
+    {
+        return $this->receiverAddress;
     }
 
     /**
@@ -379,15 +509,8 @@ class Transaction extends AbstractValueObject implements SerializableInterface, 
     /**
      * @return string
      */
-    public function getReturnURL(): string
+    public function getHash(): string
     {
-        return $this->returnURL;
-    }
-    /**
-     * @return string
-     */
-    public function getBlikAMKey(): string
-    {
-        return $this->blikAMKey;
+        return trim($this->hash);
     }
 }
