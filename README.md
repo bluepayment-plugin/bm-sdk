@@ -85,7 +85,6 @@ $result = $client->getTransactionRedirect([
        'orderID' => '123', // Id transakcji, wymagany
        'amount' => '1.20', // Kwota transakcji, wymagany
        'description' => 'Transakcja 123-123', // Tytuł transakcji, opcjonalny
-       'gatewayID' => '0', // Identyfikator kanału płatności, opcjonalny, w tym przypadku można ustawić jako 0 lub pominąć
        'currency' => 'PLN', // Waluta transakcji, opcjonalny, domyślnie PLN
        'customerEmail' => 'test@hostname.domain' // Email klienta, opcjonalny, zalecany ze względu na automatyczne uzupełnienie pola po stronie serwisu BM
    ]
@@ -132,7 +131,6 @@ $result = $client->doTransactionInit([
         'orderID' => '123',
         'amount' => '1.20',
         'description' => 'Transakcja 123-123',
-        'gatewayID' => '0',
         'currency' => 'PLN',
         'customerEmail' => 'test@hostname.domain'
     ]
