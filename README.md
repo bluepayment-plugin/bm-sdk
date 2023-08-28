@@ -1,6 +1,6 @@
-## BlueMedia PHP SDK
+## Autopay PHP SDK
 
-Kod zawarty w tym repozytorium umożliwia wykonanie transakcji oraz innych usług oferowanych przez Blue Media S.A.
+Kod zawarty w tym repozytorium umożliwia wykonanie transakcji oraz innych usług oferowanych przez Autopay S.A.
 
 Użycie SDK zalecane jest podczas implementacji własnych modułów płatności.
 
@@ -13,11 +13,11 @@ Użycie SDK zalecane jest podczas implementacji własnych modułów płatności.
 - [Konfiguracja klienta](#konfiguracja-klienta)
 - [Transakcja poprzez przekierowanie na paywall](#transakcja-poprzez-przekierowanie-na-paywall)
 - [Przedtransakcja](#przedtransakcja)
-    * [Przedtransakcja, link do kontynuacji płatności](#przedtransakcja-link-do-kontynuacji-płatności)
-    * [Przedtransakcja, brak kontynuacji](#przedtransakcja-brak-kontynuacji)
+  * [Przedtransakcja, link do kontynuacji płatności](#przedtransakcja-link-do-kontynuacji-płatności)
+  * [Przedtransakcja, brak kontynuacji](#przedtransakcja-brak-kontynuacji)
 - [Szybki przelew](#szybki-przelew)
 - [Obsługa ITN (Instant Transaction Notification)](#obsługa-itn-instant-transaction-notification)
-    * [Obsługa ITN, utworzenie obiektu komunikatu](#obsługa-itn-utworzenie-obiektu-komunikatu)
+  * [Obsługa ITN, utworzenie obiektu komunikatu](#obsługa-itn-utworzenie-obiektu-komunikatu)
 - [Pobieranie listy aktualnie dostępnych regulaminów](#pobieranie-listy-aktualnie-dostępnych-regulaminów)
 - [Pobieranie listy kanałów płatności](#pobieranie-listy-kanałów-płatności)
 
@@ -56,7 +56,7 @@ $client = new BlueMedia\Client('ID SERWISU', 'KLUCZ WSPÓŁDZIELONY');
 
 ## Konfiguracja klienta
 
-W celu utworzenia warstwy komunikacji należy utworzyć obiekt klasy `BlueMedia\Client` podając id serwisu oraz klucz współdzielony (przyznane przez BlueMedia).
+W celu utworzenia warstwy komunikacji należy utworzyć obiekt klasy `BlueMedia\Client` podając id serwisu oraz klucz współdzielony (przyznane przez Autopay).
 
 ```php
 $client = new BlueMedia\Client('ID SERWISU', 'KLUCZ WSPÓŁDZIELONY');
@@ -74,13 +74,13 @@ $client = new BlueMedia\Client(
 ```
 
 ## Transakcja poprzez przekierowanie na paywall
-Najprostszym typem wykonania transakcji jest przekierowanie do serwisu BlueMedia wraz z danymi o transakcji. Obsługa płatności leży wtedy w całości po stronie serwisu BlueMedia.
+Najprostszym typem wykonania transakcji jest przekierowanie do serwisu Autopay wraz z danymi o transakcji. Obsługa płatności leży wtedy w całości po stronie serwisu Autopay.
 
-Aby wykonać transakcję należy wywołać metodę `getTransactionRedirect`, poprawne wykonanie metody zwróci formularz który wykona przekierowanie do serwisu BlueMedia:
+Aby wykonać transakcję należy wywołać metodę `getTransactionRedirect`, poprawne wykonanie metody zwróci formularz który wykona przekierowanie do serwisu Autopay:
 
 ```php
 $result = $client->getTransactionRedirect([
-   'gatewayUrl' => 'https://pay-accept.bm.pl', // Adres bramki BlueMedia
+   'gatewayUrl' => 'https://pay-accept.autopay.pl', // Adres bramki Autopay
    'transaction' => [
        'orderID' => '123', // Id transakcji, wymagany
        'amount' => '1.20', // Kwota transakcji, wymagany
@@ -93,7 +93,7 @@ $result = $client->getTransactionRedirect([
 echo $result->getData();
 ```
 
-Po wykonaniu płatności, serwis BlueMedia wykona przekierowanie na skonfigurowany wcześniej adres powrotu płatności. Przekierowanie następuje poprzez żądanie HTTPS (GET) z trzema parametrami:
+Po wykonaniu płatności, serwis Autopay wykona przekierowanie na skonfigurowany wcześniej adres powrotu płatności. Przekierowanie następuje poprzez żądanie HTTPS (GET) z trzema parametrami:
 - ServiceID - Identyfikator serwisu
 - OrderID - Identyfikator transakcji
 - Hash - Suma kontrolna wyliczona na podstawie ServiceID i OrderID.
@@ -119,14 +119,14 @@ Metoda `doTransactionInit` rozszerza standardowy model rozpoczęcia transakcji o
 - ukrycia danych wrażliwych parametrów linku transakcji – przedtransakcja odbywa się backendowo, a link do kontynuacji transakcji nie zawiera danych wrażliwych, a jedynie identyfikatory kontynuacji
 - użycia SDK w modelu pełnym (bezpiecznym)
 
-Metoda przyjmuje parametry takie jak w przypadku transakcji z przekierowaniem na paywall, z tą różnicą że wysyłany jest inny nagłówek, dzięki czemu serwis BlueMedia obsługuje żądanie w inny sposób.
+Metoda przyjmuje parametry takie jak w przypadku transakcji z przekierowaniem na paywall, z tą różnicą że wysyłany jest inny nagłówek, dzięki czemu serwis Autopay obsługuje żądanie w inny sposób.
 W odpowiedzi otrzymywany jest link do kontynuacji transakcji lub odpowiedź informująca o braku kontynuacji oraz statusem płatności.
 
 #### Przedtransakcja, link do kontynuacji płatności
 
 ```php
 $result = $client->doTransactionInit([
-    'gatewayUrl' => 'https://pay-accept.bm.pl',
+    'gatewayUrl' => 'https://testpay.autopay.eu',
     'transaction' => [
         'orderID' => '123',
         'amount' => '1.20',
@@ -138,7 +138,7 @@ $result = $client->doTransactionInit([
 
 $transactionContinue = $result->getData();
 
-$transactionContinue->getRedirectUrl(); // https://pay-accept.bm.pl/payment/continue/9IA2UISN/718GTV5E
+$transactionContinue->getRedirectUrl(); // https://testpay.autopay.eu/payment/continue/9IA2UISN/718GTV5E
 $transactionContinue->getStatus(); // PENDING
 $transactionContinue->getOrderId(); // 123
 $transactionContinue->toArray(); // [...]
@@ -149,7 +149,7 @@ $transactionContinue->toArray(); // [...]
 
 ```php
 $result = $client->doTransactionInit([
-    'gatewayUrl' => 'https://pay-accept.bm.pl',
+    'gatewayUrl' => 'https://testpay.autopay.eu',
     'transaction' => [
         'orderID' => '123',
         'amount' => '1.20',
@@ -180,7 +180,7 @@ Przykład wywołania (dane do transakcji):
 
 ```php
 $result = $client->doTransactionBackground([
-    'gatewayUrl' => 'https://pay-accept.bm.pl',
+    'gatewayUrl' => 'https://testpay.autopay.eu',
     'transaction' => [
        'orderID' => '12345',
        'amount' => '5.12',
@@ -198,7 +198,7 @@ $result = $client->doTransactionBackground([
 $transactionBackground = $result->getData();
 
 $transactionBackground->getReceiverNRB(); // 47 1050 1764 1000 0023 2741 0516
-$transactionBackground->getReceiverName(); // Blue Media
+$transactionBackground->getReceiverName(); // Autopay
 $transactionBackground->getBankHref(); // https://ssl.bsk.com.pl/bskonl/login.html
 $transactionBackground->toArray(); // [...]
 // ...
@@ -208,7 +208,7 @@ Przykład wywołania (formularz płatności):
 
 ```php
 $result = $client->doTransactionBackground([
-    'gatewayUrl' => 'https://pay-accept.bm.pl',
+    'gatewayUrl' => 'https://testpay.autopay.eu',
     'transaction' => [
        'orderID' => '12345',
        'amount' => '5.12',
@@ -229,8 +229,8 @@ echo $transactionBackground; // <form action="https://pg-accept.blue.pl/gateway/
 ```
 
 ## Obsługa ITN (Instant Transaction Notification)
-Serwis BlueMedia po wykonaniu płatności wysyła na wcześniej skonfigurowany adres ITN komunikat o statusie płatności. Dane przesyłane są w formacie XML dodatkowo zakodowanym w base64.
-SDK oferuje metodę `doItnIn` która w wyniku przekazania danych z serwisu BlueMedia zwraca gotowy obiekt `BlueMedia\Itn\ValueObject\ItnIn` pozwalający na użycie akcesorów lub konwersję do tablicy.
+Serwis Autopay po wykonaniu płatności wysyła na wcześniej skonfigurowany adres ITN komunikat o statusie płatności. Dane przesyłane są w formacie XML dodatkowo zakodowanym w base64.
+SDK oferuje metodę `doItnIn` która w wyniku przekazania danych z serwisu Autopay zwraca gotowy obiekt `BlueMedia\Itn\ValueObject\ItnIn` pozwalający na użycie akcesorów lub konwersję do tablicy.
 Dzięki temu obiektowi, programista może użyć danych potrzebnych np. do aktualizacji statusu płatności w bazie danych itp.
 
 Po przetworzeniu komunikatu ITN należy przekazać odpowiedź. Służy do tego metoda `doItnInResponse` która przyjmuje obiekt `ItnIn` oraz argument informujący o potwierdzeniu transakcji.
@@ -270,7 +270,7 @@ $itn->getCurrency(); // PLN
 Metoda `getRegulationList` umożliwia odpytanie o aktualną listę regulaminów wraz linkami do wyświetlenia w serwisie oraz akceptacji przez klienta.
 
 ```php
-$result = $this->client->getRegulationList('https://pay-accept.bm.pl');
+$result = $this->client->getRegulationList('https://testpay.autopay.eu');
 
 return $result->getData();
 ```
@@ -279,7 +279,7 @@ return $result->getData();
 Metoda `testGetPaywayList` umożliwia odpytanie o aktualną listę płatności.
 
 ```php
-$result = $this->client->getPaywayList('https://pay-accept.bm.pl');
+$result = $this->client->getPaywayList('https://testpay.autopay.eu');
 
 return $result->getData();
 ```
