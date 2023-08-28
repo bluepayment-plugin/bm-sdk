@@ -80,7 +80,7 @@ Aby wykonać transakcję należy wywołać metodę `getTransactionRedirect`, pop
 
 ```php
 $result = $client->getTransactionRedirect([
-   'gatewayUrl' => 'https://pay-accept.autopay.pl', // Adres bramki Autopay
+   'gatewayUrl' => 'https://testpay.autopay.eu', // Adres bramki Autopay
    'transaction' => [
        'orderID' => '123', // Id transakcji, wymagany
        'amount' => '1.20', // Kwota transakcji, wymagany
