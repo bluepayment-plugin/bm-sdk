@@ -1,6 +1,6 @@
 {
     "name": "bluepayment-plugin/bm-sdk",
-    "description": "Blue Media PHP SDK",
+    "description": "Autopay PHP SDK",
     "license": "LGPL-3.0-only",
     "require": {
         "php": ">=7.2",

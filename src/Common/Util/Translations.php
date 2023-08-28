@@ -19,22 +19,22 @@ class Translations
 
     private $translations = [
         'pl' => [
-            self::REDIRECT => 'Trwa przekierowanie do Bramki Płatniczej Blue Media...',
+            self::REDIRECT => 'Trwa przekierowanie do Bramki Płatniczej Autopay...',
             self::JAVASCRIPT_DISABLED => 'Masz wyłączoną obsługę JavaScript',
             self::JAVASCRIPT_REQUIRED =>
-                'Aby przejść do Bramki Płatniczej Blue Media, musisz włączyć obsługę JavaScript w przeglądarce.',
+                'Aby przejść do Bramki Płatniczej  Autopay, musisz włączyć obsługę JavaScript w przeglądarce.',
         ],
         'en' => [
-            self::REDIRECT => 'You are being redirected to the Blue Media Payment Gateway...',
+            self::REDIRECT => 'You are being redirected to the Autopay Payment Gateway...',
             self::JAVASCRIPT_DISABLED => 'You have disabled JavaScript',
             self::JAVASCRIPT_REQUIRED =>
-                'To access the Blue Media Payment Gateway, you need to enable JavaScript in your browser.',
+                'To access the Autopay Payment Gateway, you need to enable JavaScript in your browser.',
         ],
         'de' => [
-            self::REDIRECT => 'Sie werden zum Blue Media Payment Gateway weitergeleitet...',
+            self::REDIRECT => 'Sie werden zum Autopay Payment Gateway weitergeleitet...',
             self::JAVASCRIPT_DISABLED => 'Sie haben JavaScript deaktiviert',
             self::JAVASCRIPT_REQUIRED =>
-                'Damit du auf die zahlungspflichtige Seite Blue Media zugreifen kannst, aktiviere das JavaScript.',
+                'Damit du auf die zahlungspflichtige Seite Autopay zugreifen kannst, aktiviere das JavaScript.',
         ],
     ];
 
