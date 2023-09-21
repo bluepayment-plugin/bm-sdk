@@ -20,6 +20,7 @@ use JMS\Serializer\Annotation\Type;
  *      "gatewayID",
  *      "currency",
  *      "customerEmail",
+ *      "language",
  *      "customerNRB",
  *      "taxCountry",
  *      "customerIP",
@@ -102,6 +103,14 @@ class Transaction extends AbstractValueObject implements SerializableInterface, 
      * @Type("string")
      */
     protected $customerEmail;
+
+    /**
+     * Selection of the language in which the content will be presented in the system.
+     *
+     * @var string
+     * @Type("string")
+     */
+    protected $language;
 
     /**
      * Transaction customer bank account number.
@@ -344,6 +353,14 @@ class Transaction extends AbstractValueObject implements SerializableInterface, 
     public function getCustomerEmail(): string
     {
         return $this->customerEmail;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLanguage(): string
+    {
+        return $this->language;
     }
 
     /**
