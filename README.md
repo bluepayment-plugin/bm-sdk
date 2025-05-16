@@ -4,7 +4,7 @@ Kod zawarty w tym repozytorium umożliwia wykonanie transakcji oraz innych usłu
 
 Użycie SDK zalecane jest podczas implementacji własnych modułów płatności.
 
-**Uwaga:** w wersji 1.0.0 możliwe jest wykonanie płatności oraz ITN z ograniczonym zestawem parametrów.
+**Uwaga:** oprogramowanie nie jest już wspierane przez Autopay S.A.
 
 ## Spis treści
 - [Repozytorium](#repozytorium)
